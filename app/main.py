@@ -16,8 +16,8 @@ from PyQt6.QtWidgets import (
     QFileDialog,
 )
 
-from controlPanel import ArrowButtonsWidget
-from curves.de_casteljau import de_casteljau
+from app.controlPanel import ArrowButtonsWidget
+from app.curves.de_casteljau import de_casteljau
 
 
 class MatplotlibWidget(QWidget):
@@ -370,16 +370,33 @@ class MatplotlibWidget(QWidget):
 
 
 class MainWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, width=1200, height=800):
         super().__init__()
+        screen_width = self.screen().geometry().width()
+        screen_height = self.screen().geometry().height()
 
         # Setting central widget on MatplotlibWidget
-        self.setCentralWidget(MatplotlibWidget(800, 800))
+        central = MatplotlibWidget(800, 800)
+        self.setCentralWidget(central)
         self.setWindowTitle("Matplotlib z PyQt6")
 
+        # Setting window size and position
+        self.setGeometry(
+            screen_width // 2 - width // 2,
+            screen_height // 2 - height // 2,
+            width,
+            height,
+        )
+        central.setFixedHeight(height)
 
-# Executing app
-app = QApplication(sys.argv)
-main = MainWindow()
-main.show()
-sys.exit(app.exec())
+
+def main():
+    app = QApplication(sys.argv)
+    main = MainWindow()
+    main.show()
+    sys.exit(app.exec())
+
+
+if __name__ == "__main__":
+    # Executing app
+    main()
