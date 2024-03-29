@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "curves-editor"
+version = "0.1.0"
+description = "Curve editor that can draw and edit cubic splines and bezier curves."
+authors = ["Mikolkar <mikolaj.karapka@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "curves_editor"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+PyQt6 = "^6.6.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
