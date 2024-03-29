@@ -18,6 +18,7 @@ from PyQt6.QtWidgets import (
 
 from app.controlPanel import ArrowButtonsWidget
 from app.curves.de_casteljau import de_casteljau
+from app.curves.nifs import NIFS3
 
 
 class MatplotlibWidget(QWidget):
@@ -34,6 +35,8 @@ class MatplotlibWidget(QWidget):
         self.line = []
         self.lst_points = {}
         self.max_spline = 0
+
+        self.flag = {"flag": "bezier", "args": ["bezier", "spline"]}
 
         # Points
         self.right_bar = ArrowButtonsWidget(self.manageCallbacks)
@@ -94,18 +97,11 @@ class MatplotlibWidget(QWidget):
     def plot(self, u):
         self.rm_lines_and_dots()
 
-        for key in self.lst_points:
-            x_points = self.lst_points[key][0]
-            y_points = self.lst_points[key][1]
-            u_num = self.u_num
-            points = self.return_bezier_spline(x_points, y_points, u_num)
+        if self.flag["flag"] == "bezier":
+            points = self.return_bezier_spline(self.x_points, self.y_points, self.u_num)
+        else:
+            points = self.return_spline_points(self.x_points, self.y_points, self.u_num)
 
-            # Drawing new line
-            new_line = self.ax.plot(*points, "b-")
-
-            # Adding new line to list
-            self.line.extend(new_line)
-        points = self.return_bezier_spline(self.x_points, self.y_points, self.u_num)
         # Drawing new line
         new_line = self.ax.plot(*points, "b-")
 
@@ -120,21 +116,7 @@ class MatplotlibWidget(QWidget):
     def addWidgets(self):
         # Adding canvas to layout
         self.layout.addWidget(self.canvas)
-
-        self.button = QPushButton("Wypisz punkty")
-        self.button.clicked.connect(self.printVectors)
-
         self.main.addWidget(self.right_bar)
-
-    def printVectors(self):
-        u = np.linspace(0, 1, self.u_num + 1)
-
-        arr_u = [k for k in u]
-
-        print(f"x: {self.x_points}")
-        print(f"y: {self.y_points}")
-
-        print(f"u: {arr_u}")
 
     # Matplotlib events
     def onclick(self, event):
@@ -353,6 +335,11 @@ class MatplotlibWidget(QWidget):
         elif callback == 5:
             chooseSpline()
 
+        elif callback == 6:
+            index = self.flag["args"].index(self.flag["flag"])
+            index = (index + 1) % 2
+            self.flag["flag"] = self.flag["args"][index]
+
     def return_bezier_spline(self, x, y, u_len):
         t_values = np.linspace(0, 1, num=u_len)
         w = [1 for _ in range(len(x))]
@@ -362,6 +349,15 @@ class MatplotlibWidget(QWidget):
         y_values = [point[1] for point in bezier_points]
 
         return x_values, y_values
+
+    def return_spline_points(self, x_points, y_points, u_len):
+        t = np.linspace(0, 1, len(x_points))
+        u = np.linspace(0, 1, u_len + 1)
+
+        sx = NIFS3(t, x_points).result()
+        sy = NIFS3(t, y_points).result()
+
+        return [sx(uk) for uk in u], [sy(uk) for uk in u]
 
     def absPath(self, file_name):
         dir_path = os.path.dirname(os.path.realpath(__file__))

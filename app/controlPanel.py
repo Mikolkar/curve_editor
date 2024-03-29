@@ -14,6 +14,7 @@ from PyQt6.QtGui import QAction
 
 
 class ArrowButtonsWidget(QWidget):
+
     def __init__(self, change_callback=None):
         super().__init__()
         self.change_callback = change_callback
@@ -32,9 +33,7 @@ class ArrowButtonsWidget(QWidget):
 
     def initUI(self):
         main_layout = QVBoxLayout()
-        main_frame = QFrame()
-
-        self.grid = QGridLayout(main_frame)
+        self.main_frame = QFrame()
 
         # Setting buttons
         self.setButtons()
@@ -42,8 +41,9 @@ class ArrowButtonsWidget(QWidget):
         # Adding all widgets to grid
         self.addWidgets()
 
-        main_layout.addWidget(main_frame)
+        main_layout.addWidget(self.main_frame)
         self.setLayout(main_layout)
+        self.setStyleSheet(open("styles.css").read())
 
     def removeSpline(self, index):
         spline = self.spline_menu.actions()[index]
@@ -103,6 +103,7 @@ class ArrowButtonsWidget(QWidget):
             if abs(inp) == 1:
                 self.tmp_u_num += inp
         self.u_line.setText(f"{self.tmp_u_num}")
+
         # Setting to function u
         if self.tmp_x != [] and self.tmp_y != []:
             if self.change_callback:
@@ -127,6 +128,7 @@ class ArrowButtonsWidget(QWidget):
             self.btnLeft.clicked.connect(lambda: self.movePoint("LEFT"))
             self.btnRight.clicked.connect(lambda: self.movePoint("RIGHT"))
 
+            # Set auto repeat for buttons
             self.btnUp.setAutoRepeat(True)
             self.btnDown.setAutoRepeat(True)
             self.btnLeft.setAutoRepeat(True)
@@ -161,6 +163,7 @@ class ArrowButtonsWidget(QWidget):
             self.choose_spline = QPushButton("Wybierz krzywą")
             self.spline_menu = QMenu(self)
             self.choose_spline.setMenu(self.spline_menu)
+
             spline_name = f"Krzywa {self.spline_index}"
             spline_action = QAction(spline_name, self)
             spline_num = self.spline_index
@@ -170,7 +173,6 @@ class ArrowButtonsWidget(QWidget):
             )
 
             self.spline_index += 1
-            # self.addCurve()
 
             # remove spline
             self.rm_spline = QPushButton("Usuń krzywą")
@@ -180,7 +182,7 @@ class ArrowButtonsWidget(QWidget):
         set_U_Buttons()
         setOtherButtons()
 
-    # Fuctions for buttons
+    # Functions for buttons
     def addWidgets(self):
         def setLabels():
             self.label_2 = QLabel("Rozmiar u")
@@ -194,34 +196,37 @@ class ArrowButtonsWidget(QWidget):
         # Setting labels
         setLabels()
 
+        grid = QGridLayout(self.main_frame)
         # choose file button
-        self.grid.addWidget(self.choose_file, ind - 1, 0, 1, 3)
+        grid.addWidget(self.choose_file, ind - 1, 0, 1, 3)
+
         # u buttons and line
-        self.grid.addWidget(self.label_2, ind, 0, 1, 3)
-        self.grid.addWidget(self.u_line, ind + 1, 0, 1, 3)
-        self.grid.addWidget(self.add, ind + 2, 2)
-        self.grid.addWidget(self.okay, ind + 2, 1)
-        self.grid.addWidget(self.sub, ind + 2, 0)
+        grid.addWidget(self.label_2, ind, 0, 1, 3)
+        grid.addWidget(self.u_line, ind + 1, 0, 1, 3)
+        grid.addWidget(self.add, ind + 2, 2)
+        grid.addWidget(self.okay, ind + 2, 1)
+        grid.addWidget(self.sub, ind + 2, 0)
 
         # move buttons and line
         frame = QFrame()
         lay = QHBoxLayout(frame)
         lay.addWidget(self.line)
         lay.addWidget(self.btnJump)
-        self.grid.addWidget(self.label, ind + 3, 0, 1, 3)
-        # self.grid.addWidget(self.line, ind + 4, 0, 1, 1)
-        # self.grid.addWidget(self.btnJump, ind + 4, 2, 1, 2)
-        self.grid.addWidget(frame, ind + 4, 0, 1, 3)
 
-        self.grid.addWidget(self.btnUp, ind + 5, 1)
-        self.grid.addWidget(self.btnDown, ind + 7, 1)
-        self.grid.addWidget(self.btnLeft, ind + 6, 0)
-        self.grid.addWidget(self.btnRight, ind + 6, 2)
-        self.grid.addWidget(self.ok, ind + 6, 1)
+        # move buttons
+        grid.addWidget(self.label, ind + 3, 0, 1, 3)
+        grid.addWidget(frame, ind + 4, 0, 1, 3)
+        grid.addWidget(self.btnUp, ind + 5, 1)
+        grid.addWidget(self.btnDown, ind + 7, 1)
+        grid.addWidget(self.btnLeft, ind + 6, 0)
+        grid.addWidget(self.btnRight, ind + 6, 2)
+        grid.addWidget(self.ok, ind + 6, 1)
 
         # save points button
-        self.grid.addWidget(self.new_spline, ind + 8, 0, 1, 3)
-        self.grid.addWidget(self.choose_spline, ind + 9, 0, 1, 3)
-        self.grid.addWidget(self.rm_spline, ind + 10, 0, 1, 3)
-        self.grid.addWidget(self.save_points, ind + 11, 0, 1, 3)
-        self.grid.setRowStretch(ind + 12, 1)
+        grid.addWidget(self.new_spline, ind + 8, 0, 1, 3)
+        grid.addWidget(self.choose_spline, ind + 9, 0, 1, 3)
+        grid.addWidget(self.rm_spline, ind + 10, 0, 1, 3)
+        grid.addWidget(self.save_points, ind + 11, 0, 1, 3)
+
+        # Setting alignment
+        grid.setAlignment(Qt.AlignmentFlag.AlignCenter)
