@@ -6,7 +6,7 @@ Curve editor that can draw and edit cubic splines and bezier curves. The project
 
 ## Features - TO DO
 
-## Instalation
+## Installation
 
 ```
 poetry install
