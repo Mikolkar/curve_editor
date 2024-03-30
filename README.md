@@ -54,13 +54,14 @@ poetry run project
 $\forall n \in N, a = x_0 < x_1 < ... < x_n = b$ and function $f$ exists exacly one cubic piecewise interpolating function $s$, satisfying the conditions $s''(a) = s''(b) = 0$
 
   - For each interval $[x_{k-1}, x_k], k=(1,2,...,n)$ is:
-- 
-  $s(x) = h^{-1}_k\Bigg[\frac{1}{6}M_{k-1}(x_k - x)^3 + \frac{1}{6} M_k (x - x_k)^3+(f(x_{k-1}) - \frac{1}{6}M_{k-1}h^2_k)(x_k - x) + (f(x_k) - \frac{1}{6}M_k h^2_k)(x - x_{k-1})\Bigg]$
+
+![exp_1](./screenshots/exp_1.png)
+ 
 
 
-    where 
+where 
     
-    $M_k := s''(x_k), \lambda_k := h_k/(h_k+ h_k+1), h_k := x_k + x_{k-1}$
+$M_k := s''(x_k), \lambda_k := h_k/(h_k+ h_k+1), h_k := x_k + x_{k-1}$
 
 - Values:
 
@@ -79,12 +80,7 @@ $\forall n \in N, a = x_0 < x_1 < ... < x_n = b$ and function $f$ exists exacly 
 - in the following recursive way:
 
 
-    $q_0 := u_0 := 0,\\
-    \begin{matrix}
-    p_k := \lambda_kq_k + 2, \\
-    q_k := (\lambda_k-1) / p_k, \\
-    u_k := (d_k-1 \lambda_k u_{k-1}) / p_{k-1} 
-    \end{matrix} \Biggm\} = (k = 1,2, ..., n-1)$
+    ![exp_2](./screenshots/exp_2.png)
 
 - where
 
@@ -108,9 +104,8 @@ We create
 
 Next we evaluate
 
+![exp_3](./screenshots/exp_3.png)
 
-- $\begin{matrix}s_x(t_k) = x_k \\
-    s_y(t_k) = y_k\end{matrix}  \bigg\} (k=0,1, ..., n)$
 
 In the end we return a sequence of points on the plot
 
