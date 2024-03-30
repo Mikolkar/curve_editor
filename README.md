@@ -80,7 +80,7 @@ $M_k := s''(x_k), \lambda_k := h_k/(h_k+ h_k+1), h_k := x_k + x_{k-1}$
 - in the following recursive way:
 
 
-    ![exp_2](./screenshots/exp_2.png)
+![exp_2](./screenshots/exp_2.png)
 
 - where
 
@@ -127,7 +127,7 @@ The curve at point $t_0$ can be evaluated with the recurence relation
 
 - $\beta^{(0)}_i := \beta_i, \ \ (i = 0, 1, ..., n),$
 
-    $\beta^{(j)}_i := \beta^{(j - 1)}_i (1 - t_0) + \beta^{(j-1)}_{i+1} t_0, \ \ (i = 0, 1, ..., n - j; \ \ j = 1,2, ..., n)$
+![exp_4](./screenshots/exp_4.png)
 
 The result $B(t_0)$ is given by
 
