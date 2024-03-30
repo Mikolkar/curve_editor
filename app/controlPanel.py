@@ -29,6 +29,12 @@ class ArrowButtonsWidget(QWidget):
         self.spline_index = 0
         self.chosen_spline = 0
         self.spline_changed = True
+
+        self.curve = {
+            "flag": "bezier",
+            "args": ["bezier", "spline"],
+        }
+
         self.initUI()
 
     def initUI(self):
@@ -178,6 +184,19 @@ class ArrowButtonsWidget(QWidget):
             self.rm_spline = QPushButton("Usuń krzywą")
             self.rm_spline.clicked.connect(lambda: self.change_callback([], 4))
 
+            # chose type of curve
+            self.curve_button = QPushButton("Rodzaj krzywej")
+            curve_menu = QMenu("curve_types")
+            self.curve_button.setMenu(curve_menu)
+
+            action_1 = QAction("Krzywa beziera", self)
+            action_1.triggered.connect(lambda: self.change_callback(["bezier"], 6))
+            curve_menu.addAction(action_1)
+
+            action_2 = QAction("Krzywa nifs3", self)
+            action_2.triggered.connect(lambda: self.change_callback(["nifs3"], 6))
+            curve_menu.addAction(action_2)
+
         setMoveButtons()
         set_U_Buttons()
         setOtherButtons()
@@ -191,13 +210,14 @@ class ArrowButtonsWidget(QWidget):
             self.label = QLabel("Przesuń punkt")
             self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        ind = 1
+        ind = 2
 
         # Setting labels
         setLabels()
 
         grid = QGridLayout(self.main_frame)
         # choose file button
+        grid.addWidget(self.curve_button, ind - 2, 0, 1, 3)
         grid.addWidget(self.choose_file, ind - 1, 0, 1, 3)
 
         # u buttons and line

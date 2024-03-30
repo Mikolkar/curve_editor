@@ -26,6 +26,7 @@ class MatplotlibWidget(QWidget):
         super().__init__()
         self.x_points, self.y_points = [], []
 
+        # Setting limits for axis in plot
         self.xlimit = xlimit
         self.ylimit = ylimit
 
@@ -36,7 +37,7 @@ class MatplotlibWidget(QWidget):
         self.lst_points = {}
         self.max_spline = 0
 
-        self.flag = {"flag": "bezier", "args": ["bezier", "spline"]}
+        self.flag = "bezier"
 
         # Points
         self.right_bar = ArrowButtonsWidget(self.manageCallbacks)
@@ -74,6 +75,8 @@ class MatplotlibWidget(QWidget):
         self.addWidgets()
 
     def rm_lines_and_dots(self, arg=0):
+
+        # if arg == 0, remove all lines and dots, else remove only dots
         if len(self.x_points) > 1 and self.drawing:
             if arg == 0:
                 if self.line:
@@ -97,7 +100,7 @@ class MatplotlibWidget(QWidget):
     def plot(self, u):
         self.rm_lines_and_dots()
 
-        if self.flag["flag"] == "bezier":
+        if self.flag == "bezier":
             points = self.return_bezier_spline(self.x_points, self.y_points, self.u_num)
         else:
             points = self.return_spline_points(self.x_points, self.y_points, self.u_num)
@@ -315,6 +318,13 @@ class MatplotlibWidget(QWidget):
             self.rm_lines_and_dots(1)
             self.plot(self.u_num)
 
+        def changeCurveType():
+            tmp = lst_args[0]
+            if tmp != self.flag:
+                self.flag = tmp
+                if len(self.lst_points) != 0:
+                    self.changePlot(self.x_points, self.y_points, self.u_num)
+
         if callback == 0:
             self.drawing = True
             self.u_num = lst_args[2]
@@ -336,9 +346,7 @@ class MatplotlibWidget(QWidget):
             chooseSpline()
 
         elif callback == 6:
-            index = self.flag["args"].index(self.flag["flag"])
-            index = (index + 1) % 2
-            self.flag["flag"] = self.flag["args"][index]
+            changeCurveType()
 
     def return_bezier_spline(self, x, y, u_len):
         t_values = np.linspace(0, 1, num=u_len)
