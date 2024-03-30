@@ -1,10 +1,10 @@
 # Curves editor
 
-Curve editor is a program that can draw and edit cubic splines and bezier curves. The project was created by Mikołaj Karapka for a **Numercial Analysis** course. The program was written in python and utilizes **PyQt6**, **Matplotlib** and **NumPy** libraries.
+Curve editor is a program that can draw and edit cubic splines and bézier curves. The project was created by Mikołaj Karapka for a **Numercial Analysis** course. The program was written in python and utilizes **PyQt6**, **Matplotlib** and **NumPy** libraries.
 
 ## Screenshots
 
-### Plot of Bezier curve
+### Plot of Bézier curve
 
 ![bezier](./screenshots/Bezier_curve_pic.png)
 
@@ -12,19 +12,19 @@ Curve editor is a program that can draw and edit cubic splines and bezier curves
 
 ![cubic_spline](./screenshots/Cubic_spline_pic.png)
 
-### Plot with pasted img
+### Plot with a pasted image
 
 ![pasted_img](./screenshots/Pasted_img.png)
 
 ## Features
 
-- Drawing and Editing Multiple Bézier Curves (Bézier with a capital "B")
-- Drawing and Editing Multiple Cubic Splines
-- Pasting Image into Plot
-- Saving Created Curves to File
-- Reducing the Number of Sharp Edges in the Function (Rozmiar u)
-- Moving Drawn Points on the Axis by a Specific Amount
-- Zooming Drawn Curves
+- Drawing and editing multiple Bézier curves
+- Drawing and editing multiple Cubic splines
+- Pasting image into plot
+- Saving created curves to file
+- Reducing the number of sharp edges in the function (Rozmiar u)
+- Moving drawn points on the axis by a specific amount
+- Zooming drawn curves
 
 ## Installation
 
