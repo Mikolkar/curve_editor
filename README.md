@@ -80,7 +80,7 @@ $M_k := s''(x_k), \lambda_k := h_k/(h_k+ h_k+1), h_k := x_k + x_{k-1}$
 - in the following recursive way:
 
 
-    ![exp_2](./screenshots/exp_2.png)
+![exp_2](./screenshots/exp_2.png)
 
 - where
 
