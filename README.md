@@ -47,5 +47,5 @@ poetry run project
 - **Remove the last point**: Alt + left mouse button
 
 ## Explanation of algorithms to calculate  each curves
-
-[!exp](https://github.com/Mikolkar/curve_editor/blob/main/exp.pdf)
+Click link below to open exp.pdf
+[explanation](https://github.com/Mikolkar/curve_editor/blob/main/exp.pdf)
