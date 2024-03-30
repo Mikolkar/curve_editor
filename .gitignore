@@ -84,4 +84,4 @@ dmypy.json
 .pyre/
 
 # ignore tmp.txt
-tmp.txt
+tmp*
