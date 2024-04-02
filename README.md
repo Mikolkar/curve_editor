@@ -28,17 +28,17 @@ Curve editor is a program that can draw and edit cubic splines and bézier curve
 
 ## Installation
 
-```
+```shell
 poetry install
 ```
 
-## Usage
+## Run
 
-### To start program:
-
-```
+```shell
 poetry run project
 ```
+
+## Usage
 
 ### Shortcuts:
 
